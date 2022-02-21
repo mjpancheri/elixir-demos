@@ -1,25 +1,23 @@
 defmodule Factorial do
   def body_recursive_factorial_print(n) do
-    begin = Time.utc_now()
-
+    # use :timer.tc(fn -> body_recursive_factorial_print(n) end) to measure execution time
     fac = n * body_recursive_factorial(n - 1)
 
-    IO.puts(
-      "Factorial of #{n} is #{fac}. Executed in #{Time.diff(Time.utc_now(), begin, :microsecond)} microseconds"
-    )
+    out(fac, n)
   end
 
   defp body_recursive_factorial(0), do: 1
   defp body_recursive_factorial(n), do: n * body_recursive_factorial(n - 1)
 
   def tail_recursive_factorial(n) do
-    begin = Time.utc_now()
+    # use :timer.tc(fn -> tail_recursive_factorial(n) end) to measure execution time
+    n
+    |> tail_recursive_factorial(1)
+    |> out(n)
+  end
 
-    fac = tail_recursive_factorial(n, 1)
-
-    IO.puts(
-      "Factorial of #{n} is #{fac}. Executed in #{Time.diff(Time.utc_now(), begin, :microsecond)} microseconds"
-    )
+  defp out(fac, n) do
+    IO.puts("Factorial of #{n} is #{fac}.")
   end
 
   defp tail_recursive_factorial(0, acc), do: acc

@@ -1,17 +1,18 @@
 defmodule Fibonacci do
   def call(number) do
-    begin = Time.utc_now()
-
-    fib = calculate(number)
-
-    IO.puts(
-      "Fibonacci of #{number} is #{fib} in #{Time.diff(Time.utc_now(), begin, :microsecond)} microseconds"
-    )
+    # use :timer.tc(fn -> call(number) end) to measure execution time
+    number
+    |> calculate()
+    |> out(number)
   end
 
   def print(number) do
     list = [1, 1]
     fib_list(list, number)
+  end
+
+  defp out(fib, number) do
+    IO.puts("Fibonacci of #{number} is #{fib}")
   end
 
   defp calculate(number) do
